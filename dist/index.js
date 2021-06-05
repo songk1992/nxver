@@ -28,9 +28,20 @@ camera.position.setZ(30);
 
 // Test Object
 const myGeometry = new THREE.TorusGeometry(10,3,16,100);
-const myMaterial = new THREE.MeshStandardMaterial({color:0xFF6347});
+//const myMaterial = new THREE.MeshBasicMaterial({color:0xFF6347, wireframe: true});
+const myMaterial = new THREE.MeshStandardMaterial({color:0x77B900});
 const myTorus = new THREE.Mesh(myGeometry, myMaterial);
 scene.add(myTorus)
+
+// 점 광원
+const pointLight = new THREE.PointLight(0xFFFFFF);
+pointLight.position.set(5,5,5);
+scene.add(pointLight);
+
+// 주변 광원
+const ambientLight = new THREE.AmbientLight(0xFFFFFF);
+scene.add(ambientLight);
+
 
 function animate(){
     requestAnimationFrame( animate );
