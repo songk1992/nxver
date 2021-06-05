@@ -42,6 +42,10 @@ scene.add(pointLight);
 const ambientLight = new THREE.AmbientLight(0xFFFFFF);
 scene.add(ambientLight);
 
+const lightHelper = new THREE.PointLightHelper(pointLight);
+const gridHelper = new THREE.GridHelper(200,50);
+scene.add(lightHelper, gridHelper);
+
 
 function animate(){
     requestAnimationFrame( animate );
