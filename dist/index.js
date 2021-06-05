@@ -8,6 +8,44 @@ const scene = new THREE.Scene()
 const textureLoader = new THREE.TextureLoader()
 const myTexture = textureLoader.load('image.png')
 
+// Sizes
+const sizes = {
+    width:window.innerWidth,
+    height:window.innerHeight
+}
+
+// Camera
+const camera = new THREE.PerspectiveCamera(75,sizes.width/sizes.height,0.1,100)
+
+// Render
+const renderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    alpha: true,
+})
+renderer.setPixelRatio(Math.min(window.devicePixelRatio))
+renderer.setSize(sizes.width,sizes.height)
+camera.position.setZ(30);
+
+// Test Object
+const myGeometry = new THREE.TorusGeometry(10,3,16,100);
+const myMaterial = new THREE.MeshStandardMaterial({color:0xFF6347});
+const myTorus = new THREE.Mesh(myGeometry, myMaterial);
+scene.add(myTorus)
+
+function animate(){
+    requestAnimationFrame( animate );
+
+    myTorus.rotation.x += 0.01;
+    myTorus.rotation.y += 0.005;
+    myTorus.rotation.z += 0.01;
+
+    renderer.render(scene, camera);
+}
+
+animate();
+
+
+/*
 // Object
 const geometry = new THREE.BoxGeometry(1,1,1)
 const geometry2 = new THREE.DodecahedronGeometry(0.5,3)
@@ -76,9 +114,5 @@ const tick = () => {
     window.requestAnimationFrame(tick)
 };
 
-tick()
-
-
-
-geometry.visible = false; //Invisible
-setTimeout(function(){ geometry.visible = true; }, 3000);
+tick();
+*/
