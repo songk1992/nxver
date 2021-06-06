@@ -201,11 +201,16 @@ function moveCamera(){
 
     ++cnt;
     console.log(cnt);
-    songKim.position.y += 0.1;
+    songKim.position.y += 0.001 * cnt;
 
     camera.position.x = camPosX + t * -0.01;
     camera.position.y = camPosY + t * -0.0001;
     camera.position.z = camPosZ + t * -0.0001;
+
+    if(cnt == 1000)
+    {
+        cnt = 0;
+    }
 }
 
 document.body.onscroll = moveCamera;
