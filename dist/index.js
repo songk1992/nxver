@@ -50,6 +50,54 @@ scene.add(lightHelper, gridHelper);
 // 컨트롤
 const controls = new OrbitControls(camera, renderer.domElement);
 
+// 별 추가
+function addStar(){
+    const geometry = new THREE.SphereGeometry(0.3, 25,25);
+
+    let tempRandVal = 1;
+    tempRandVal = Math.floor(Math.random() * 9); 
+    let tempColorVal = 0xffffff;
+    
+    switch(tempRandVal) {
+        case 0:
+            tempColorVal = 0xCDDAEF;
+            break;
+        case 1:
+            tempColorVal = 0xD39E6F;
+            break;
+        case 2:
+            tempColorVal = 0xCDBFA8;
+            break;
+        case 3:
+            tempColorVal = 0xFFFDF3;
+            break;
+        case 4:
+            tempColorVal = 0xE6AF39;
+            break;
+        case 5:
+            tempColorVal = 0xC23B47;
+            break;
+
+        default:
+          // code block
+      }
+    const material = new THREE.MeshStandardMaterial( {color: tempColorVal} )
+    const star = new THREE.Mesh( geometry, material );
+
+    const [x,y,z] = Array(3).fill().map(()=> THREE.MathUtils.randFloatSpread(100));
+    star.position.set(x,y,z);
+    scene.add(star)
+}
+
+Array(400).fill().forEach(addStar)
+
+
+
+
+
+
+
+
 function animate(){
     requestAnimationFrame( animate );
 
@@ -58,7 +106,7 @@ function animate(){
     myTorus.rotation.z += 0.01;
 
     controls.update();
-    
+
     renderer.render(scene, camera);
 }
 
