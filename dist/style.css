@@ -23,6 +23,13 @@ body {
   height: 100vh;
 }
 
+@media only screen and (max-width: 600px) {
+  .mainContainer {
+    width: 100vw;
+    height: auto;
+  }
+}
+
 .textContainer {
   display: flex;
   margin: 0 auto;
@@ -35,6 +42,13 @@ body {
   flex-direction: row;
 }
 
+@media only screen and (max-width: 600px) {
+  .textContainer {
+    height: auto;
+    width: 70%;
+  }
+}
+
 .textContainer .head {
   font-weight: 900;
   font-size: 5.2em;
@@ -42,6 +56,12 @@ body {
   text-shadow: cornflowerblue;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  .textContainer .head {
+    font-size: 3em;
+  }
 }
 
 .textContainer ul,
@@ -53,6 +73,14 @@ body {
   padding: 10px 30px;
 }
 
+@media only screen and (max-width: 600px) {
+  .textContainer ul,
+  .textContainer p {
+    font-size: 1.5em;
+    padding: 5px 15px;
+  }
+}
+
 .textContainer a:visited,
 .textContainer a:link,
 .textContainer a:active {
@@ -62,6 +90,12 @@ body {
 
 .myspacer {
   padding: 20px 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .myspacer {
+    padding: 10px 0;
+  }
 }
 
 h1 {
