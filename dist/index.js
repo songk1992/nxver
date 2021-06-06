@@ -26,12 +26,24 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio))
 renderer.setSize(sizes.width,sizes.height)
 camera.position.setZ(30);
 
-// Test Object
-const myGeometry = new THREE.TorusGeometry(10,3,16,100);
+// Test Object1
+const myGeometry = new THREE.TorusGeometry(5,0.5,5,5);
 //const myMaterial = new THREE.MeshBasicMaterial({color:0xFF6347, wireframe: true});
 const myMaterial = new THREE.MeshStandardMaterial({color:0x77B900});
-const myTorus = new THREE.Mesh(myGeometry, myMaterial);
-scene.add(myTorus)
+const myPenta = new THREE.Mesh(myGeometry, myMaterial);
+scene.add(myPenta)
+myPenta.rotation.y = -1.3;
+myPenta.position.z = -30;
+myPenta.position.x = -15;
+
+// Test Object2
+const myMaterial2 = new THREE.MeshStandardMaterial({color:0x9957ff});
+const myPenta2 = new THREE.Mesh(myGeometry, myMaterial2);
+scene.add(myPenta2)
+myPenta2.rotation.y = -1.3;
+myPenta2.position.z = -30;
+myPenta2.position.x = -15;
+
 
 // 점 광원
 const pointLight = new THREE.PointLight(0xFFFFFF);
@@ -103,13 +115,70 @@ const songKim = new THREE.Mesh(
 );
 scene.add(songKim);
 
+// 행성 추가
+const earthTexture = new THREE.TextureLoader().load('images/planets/earth.jpg')
+const normalTexture = new THREE.TextureLoader().load('images/planets/earth.jpg')
 
+const earth = new THREE.Mesh(
+    new THREE.SphereGeometry(3, 32, 32),
+    new THREE.MeshStandardMaterial(
+        {
+            map: earthTexture,
+            normalMap: normalTexture
+        }
+    )
+);
+scene.add(earth);
+
+// 한국 국기 별
+const koreaTexture = new THREE.TextureLoader().load('images/flag/korea.jpg')
+const koreaSurfaceTexture = new THREE.TextureLoader().load('images/flag/korea.jpg')
+
+const korea = new THREE.Mesh(
+    new THREE.SphereGeometry(4, 32, 32),
+    new THREE.MeshStandardMaterial(
+        {
+            map: koreaTexture,
+            normalMap: koreaSurfaceTexture
+        }
+    )
+);
+scene.add(korea);
+korea.rotation.y = -1.3;
+korea.position.z = -30;
+korea.position.x = -15;
+
+// 애니메이션
+let degreeVal = 0;
 function animate(){
     requestAnimationFrame( animate );
 
-    myTorus.rotation.x += 0.01;
-    myTorus.rotation.y += 0.005;
-    myTorus.rotation.z += 0.01;
+    myPenta.rotation.x += 0.01;
+    myPenta.rotation.y += 0.005;
+    myPenta.rotation.z += 0.01;
+
+    myPenta2.rotation.x -= 0.01;
+    myPenta2.rotation.y -= 0.005;
+    myPenta2.rotation.z -= 0.01;
+
+    earth.rotation.x += 0;
+    earth.rotation.y += 0.01;
+    earth.rotation.z += 0;
+
+    if(degreeVal > 6.28318)
+    {
+        degreeVal = 0;
+    }
+    korea.position.x = 30 * Math.sin(degreeVal);
+    korea.position.y = 30 * Math.cos(degreeVal);
+
+    myPenta.position.x = 30 * Math.sin(degreeVal* 1.5);
+    myPenta.position.y = 30 * Math.cos(degreeVal* 1.5);
+
+    myPenta2.position.x = -30 * Math.sin(degreeVal);
+    myPenta2.position.y = -30 * Math.cos(degreeVal);
+
+    degreeVal += 0.01;
 
     controls.update();
 
@@ -117,6 +186,34 @@ function animate(){
 }
 
 animate();
+
+// 초기 카메라 위치
+let camPosX = camera.position.x
+let camPosY = camera.position.y
+let camPosZ = camera.position.z
+
+let cnt = 0;
+function moveCamera(){
+    const t = document.body.getBoundingClientRect().top;
+    korea.rotation.x += 0.01;
+    korea.rotation.y += 0.1;
+    korea.rotation.z += 0.01;
+
+    ++cnt;
+    console.log(cnt);
+    songKim.position.y += 0.1;
+
+    camera.position.x = camPosX + t * -0.01;
+    camera.position.y = camPosY + t * -0.0001;
+    camera.position.z = camPosZ + t * -0.0001;
+}
+
+document.body.onscroll = moveCamera;
+
+
+
+
+
 
 
 /*
