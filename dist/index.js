@@ -92,7 +92,7 @@ function addStar(){
 Array(400).fill().forEach(addStar)
 
 // 배경 
-const spaceTexture = new THREE.TextureLoader().load('galaxy/galaxy4.jpg');
+const spaceTexture = new THREE.TextureLoader().load('images/galaxy/galaxy4.jpg');
 scene.background = spaceTexture;
 
 
