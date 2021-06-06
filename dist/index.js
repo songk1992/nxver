@@ -42,10 +42,13 @@ scene.add(pointLight);
 const ambientLight = new THREE.AmbientLight(0xFFFFFF);
 scene.add(ambientLight);
 
+// 헬퍼
 const lightHelper = new THREE.PointLightHelper(pointLight);
 const gridHelper = new THREE.GridHelper(200,50);
 scene.add(lightHelper, gridHelper);
 
+// 컨트롤
+const controls = new OrbitControls(camera, renderer.domElement);
 
 function animate(){
     requestAnimationFrame( animate );
@@ -54,6 +57,8 @@ function animate(){
     myTorus.rotation.y += 0.005;
     myTorus.rotation.z += 0.01;
 
+    controls.update();
+    
     renderer.render(scene, camera);
 }
 
