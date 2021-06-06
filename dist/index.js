@@ -207,6 +207,9 @@ function moveCamera(){
     camera.position.y = camPosY + t * -0.0001;
     camera.position.z = camPosZ + t * -0.0001;
 
+    // 배경 변화
+    setBgbyNo(cnt);
+    
     if(cnt == 1000)
     {
         cnt = 0;
@@ -216,9 +219,46 @@ function moveCamera(){
 document.body.onscroll = moveCamera;
 
 
+function setBgbyNo(cnt)
+{
+    if(cnt == 700)
+    {
+        setBg(4);
+    }
+    else if(cnt == 600)
+    {
+        setBg(6);
+    }
+    else if(cnt == 500)
+    {
+        setBg(5);
+    }
+    else if(cnt == 400)
+    {
+        setBg(4);
+    }
+    else if(cnt == 300)
+    {
+        setBg(3);
+    }
+    else if(cnt == 200)
+    {
+        setBg(2);
+    }
+    else if(cnt == 100)
+    {
+        setBg(1);
+    }
+    else{
 
+    }
+}
 
-
+function setBg(myBgNo)
+{
+    const newSpaceTexture = new THREE.TextureLoader().load('images/galaxy/galaxy'+myBgNo+'.jpg');
+    scene.background = newSpaceTexture;
+}
 
 
 /*
