@@ -202,7 +202,7 @@ function moveCamera(){
     korea.rotation.z += 0.01;
 
     ++cnt;
-    console.log(cnt);
+    //console.log(cnt);
     songKim.position.y += 0.001 * cnt;
 
     camera.position.x = camPosX + t * -0.01;
