@@ -95,9 +95,13 @@ Array(400).fill().forEach(addStar)
 const spaceTexture = new THREE.TextureLoader().load('images/galaxy/galaxy4.jpg');
 scene.background = spaceTexture;
 
-
-
-
+// 박스
+const songKimTexture = new THREE.TextureLoader().load('images/image.png');
+const songKim = new THREE.Mesh(
+    new THREE.BoxGeometry(3,3,3),
+    new THREE.MeshBasicMaterial({ map: songKimTexture})
+);
+scene.add(songKim);
 
 
 function animate(){
