@@ -204,7 +204,7 @@ animate();
 
 let cnt = 0;
 function moveCamera(){
-    const t = document.body.getBoundingClientRect().top;
+    let t = document.body.getBoundingClientRect().top;
 
     if(t/limitVal < -0.5)
     {
