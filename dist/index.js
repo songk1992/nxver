@@ -2,6 +2,15 @@ import {OrbitControls} from 'https://unpkg.com/three@0.127.0/examples/jsm/contro
 import * as THREE from 'https://unpkg.com/three@0.127.0/build/three.module.js';
 const canvas = document.querySelector('canvas.webgl')
 
+
+// 현재 카메라 위치
+let camPosModifierX = 0;
+let camPosModifierY = 0;
+let camPosModifierZ = 0;
+
+// scroll 최대 값
+let limitVal = Math.max( document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight );
+
 // Scene
 const scene = new THREE.Scene()
 
@@ -151,10 +160,11 @@ korea.position.z = -30;
 korea.position.x = -15;
 
 // 애니메이션
-let degreeVal = 0;
+let IntervalVal = 0;
 function animate(){
     requestAnimationFrame( animate );
 
+    IntervalVal = (IntervalVal + Math.PI / 360) % (Math.PI * 2);
     myPenta.rotation.x += 0.01;
     myPenta.rotation.y += 0.005;
     myPenta.rotation.z += 0.01;
@@ -167,22 +177,22 @@ function animate(){
     earth.rotation.y += 0.01;
     earth.rotation.z += 0;
 
-    if(degreeVal > 6.28318)
-    {
-        degreeVal = 0;
-    }
-    korea.position.x = 30 * Math.sin(degreeVal);
-    korea.position.y = 30 * Math.cos(degreeVal);
+    korea.position.x = 30 * Math.sin(IntervalVal);
+    korea.position.y = 30 * Math.cos(IntervalVal);
 
-    myPenta.position.x = 30 * Math.sin(degreeVal* 1.5);
-    myPenta.position.y = 30 * Math.cos(degreeVal* 1.5);
+    myPenta.position.x = 30 * Math.sin(IntervalVal* 1.5);
+    myPenta.position.y = 30 * Math.cos(IntervalVal* 1.5);
 
-    myPenta2.position.x = -30 * Math.sin(degreeVal);
-    myPenta2.position.y = -30 * Math.cos(degreeVal);
-
-    degreeVal += 0.01;
+    myPenta2.position.x = -30 * Math.sin(IntervalVal);
+    myPenta2.position.y = -30 * Math.cos(IntervalVal);
 
     controls.update();
+
+
+    // 현재 카메라 위치
+    camera.position.x = camPosModifierX + 3 * Math.sin(IntervalVal* 1.5);
+    camera.position.y = camPosModifierY + 15 * Math.cos(IntervalVal* 1.5);
+    camera.position.z = camPosModifierZ + 3;
 
     renderer.render(scene, camera);
 }
@@ -190,13 +200,17 @@ function animate(){
 animate();
 
 // 초기 카메라 위치
-let camPosX = camera.position.x
-let camPosY = camera.position.y
-let camPosZ = camera.position.z
+
 
 let cnt = 0;
 function moveCamera(){
     const t = document.body.getBoundingClientRect().top;
+
+    if(t/limitVal < -0.5)
+    {
+        t *= -1;
+    }
+
     korea.rotation.x += 0.01;
     korea.rotation.y += 0.1;
     korea.rotation.z += 0.01;
@@ -205,9 +219,9 @@ function moveCamera(){
     //console.log(cnt);
     songKim.position.y += 0.001 * cnt;
 
-    camera.position.x = camPosX + t * -0.01;
-    camera.position.y = camPosY + t * -0.0001;
-    camera.position.z = camPosZ + t * -0.0001;
+    camPosModifierX = t * -0.01;
+    camPosModifierY = t * -0.0002;
+    camPosModifierZ = t * -0.0003;
 
     // 배경 변화
     setBgbyNo(cnt);
